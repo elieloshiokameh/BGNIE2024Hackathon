@@ -4,6 +4,18 @@
 <div class="container welcome-section">
     <h1>Welcome to WelcomeBlack!</h1>
     <p>You have successfully logged in. Start your journey of learning and connecting now!</p>
-    <a href="#" class="btn">Get Started</a>
+
+    <!-- Language Selection -->
+    <p>Select the language you want to learn:</p>
+
+    <div class="language-selection">
+        <form method="GET" action="{% url 'questions' %}">
+            <button type="submit" name="language" value="yoruba" class="btn">Learn Yoruba</button>
+        </form>
+
+        <form method="GET" action="{% url 'questions' %}">
+            <button type="submit" name="language" value="twi" class="btn">Learn Twi</button>
+        </form>
+    </div>
 </div>
 {% endblock %}

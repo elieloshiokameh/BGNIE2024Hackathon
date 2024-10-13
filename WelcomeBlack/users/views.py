@@ -1,9 +1,43 @@
 # users/views.py
-
+import os
+import json
+import random
+from django.conf import settings
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 
+def load_yoruba_dataset():
+    dataset_path = os.path.join(settings.BASE_DIR, '../Datasets/yorubaToEnglish.json')
+    with open(dataset_path, 'r', encoding='utf-8') as file:
+        dataset = json.load(file)
+    return dataset
+
+def load_twi_dataset():
+    dataset_path = os.path.join(settings.BASE_DIR, '../Datasets/twiToEnglish.json')
+    with open(dataset_path, 'r', encoding='utf-8') as file:
+        dataset = json.load(file)
+    return dataset
+
+def questions_view(request):
+    language = request.GET.get('language', None)  # Get the selected language from the URL
+
+    if language == 'yoruba':
+        dataset = load_yoruba_dataset()  # Assuming this function loads the Yoruba JSON dataset
+    elif language == 'twi':
+        dataset = load_twi_dataset()  # Assuming this function loads the Twi JSON dataset
+    else:
+        # Redirect to a welcome page or show an error if no valid language is selected
+        return redirect('welcome')
+
+    # Ensure that 'dataset' has been defined at this point before proceeding
+    # Shuffle options for each question
+    for question in dataset['questions']:
+        options = question['options']
+        random.shuffle(options)  # Randomize the options
+        question['options'] = options  # Update the question with shuffled options
+
+    return render(request, 'questions.html', {'questions': dataset['questions']})
 def welcome_view(request):
     return render(request, 'home.html')
 
