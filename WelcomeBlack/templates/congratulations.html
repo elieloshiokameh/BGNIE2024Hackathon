@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Try Again</title>
+    <title>Congratulations</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -21,32 +22,39 @@
         }
         h1 {
             font-size: 36px;
-            color: #ff6b6b;
+            color: #10ac84;
             margin-bottom: 20px;
         }
         p {
             font-size: 18px;
             margin-bottom: 20px;
         }
-        .retry-btn {
-            background-color: #ff6b6b;
+        .next-level-btn, .back-btn {
+            background-color: #10ac84;
             color: white;
             padding: 10px 20px;
             text-decoration: none;
             border-radius: 5px;
             font-size: 18px;
+            margin: 10px;
         }
-        .retry-btn:hover {
-            background-color: #ff8787;
+        .next-level-btn:hover, .back-btn:hover {
+            background-color: #1dd1a1;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Try Again</h1>
-        <p>Unfortunately, you did not pass the quiz for {{ language }} at {{ level }} level. Try again!</p>
-        <!-- Adjusted the retry button link to redirect to the same quiz -->
-        <a href="{% url 'quiz_view' language=language level=level %}" class="retry-btn">Retry</a>
+        <h1>Congratulations!</h1>
+        <p>You have successfully completed the quiz for {{ language }} at {{ level }} level.</p>
+        
+        <!-- Option to go to Medium level if the score is greater than or equal to 6 -->
+        {% if correct_answers >= 6 %}
+            <p>Great job! Ready for a challenge? Try the Medium level questions.</p>
+            <a href="{% url 'quiz_view' language=language level='Medium' %}" class="next-level-btn">Try Medium Level</a>
+        {% endif %}
+        
+        <a href="/" class="back-btn">Back to Home</a>
     </div>
 </body>
 </html>

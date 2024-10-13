@@ -134,3 +134,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'  # Add the trailing slash
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # No need for the trailing slash here
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),  # Static files (CSS, JS, Images)
+]

@@ -19,40 +19,39 @@ from django.http import HttpResponse
 import pandas as pd
 import os
 from django.conf import settings
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import random
 
-# Function to load Excel data based on the language ('Twi' or 'Yoruba')
-def load_excel_data(sheet_name):
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import login, logout, authenticate
+
+# Function to load the correct sheet from the Excel file based on the selected language
+def load_excel_data(language):
     file_path = os.path.join(settings.BASE_DIR, 'WelcomeBlack', 'data', 'TwiYoruba.xlsx')
 
-    # Load the appropriate sheet ('Twi' or 'Yoruba')
-    try:
-        df = pd.read_excel(file_path, sheet_name=sheet_name)
-        return df
-    except Exception as e:
-        print(f"Error loading Excel file: {e}")
+    if language == 'Twi':
+        df = pd.read_excel(file_path, sheet_name='Twi')
+    elif language == 'Yoruba':
+        df = pd.read_excel(file_path, sheet_name='Yoruba')
+    else:
         return None
+    return df
 
-# Main quiz view
+# Main quiz view for displaying and handling the quiz logic
+# Main quiz view for displaying and handling the quiz logic
 def quiz_view(request, language, level):
-    # Load data from the Excel file based on the selected language (Twi or Yoruba)
     df = load_excel_data(language)
     if df is None:
-        return render(request, 'error.html', {'message': 'Unable to load quiz data.'})
+        return redirect('select_language')  # Redirect if language is not valid
 
-    # Filter questions by level (assuming there's a "Level" column in the Excel file)
     filtered_df = df[df['Level'] == level]
     questions = filtered_df.to_dict('records')
-
-    # Shuffle and pick the first 8 questions
     random.shuffle(questions)
-    questions = questions[:8]
+    questions = questions[:8]  # Limit the number of questions to 8
 
     current_question = request.session.get('current_question', 0)
     correct_answers = request.session.get('correct_answers', 0)
 
-    # Handle form submission
     if request.method == 'POST':
         selected_answer = request.POST.get('answer')
         correct_answer = request.session['correct_answer']
@@ -72,31 +71,66 @@ def quiz_view(request, language, level):
             else:
                 return render(request, 'try_again.html', {'level': level, 'language': language})
 
-    # Load next question
+    # Generate correct and wrong options
     if current_question < 8:
         question = questions[current_question]
-        correct_translation = question[language]  # Get the word in the selected language column
+        correct_translation = question[language]
 
-        # Generate 3 random wrong options
+        # Generate three wrong options
         wrong_options = df[df[language] != correct_translation][language].sample(3).tolist()
         options = wrong_options + [correct_translation]
         random.shuffle(options)
 
-        # Store the correct answer in the session
         request.session['correct_answer'] = correct_translation
 
-        # Create a list of tuples with options and their corresponding audio files
-        options_with_audio = []
-        for option in options:
-            word_index = df[df[language] == option].index[0]  # Get the index of the word in the Excel file
-            audio_file = f"{settings.MEDIA_URL}audio/{language}_{word_index}.mp3"
-            options_with_audio.append((option, audio_file))
+        # Generate paths to the correct audio files for each option
+        options_audio_files = []
+        for idx, option in enumerate(options):
+            option_audio_file = f"{settings.MEDIA_URL}audio/{language}_{df[df[language] == option].index[0]}.mp3"
+            options_audio_files.append(option_audio_file)
+
+        question_audio_file = f"{settings.MEDIA_URL}audio/{language}_{current_question}.mp3"
 
         return render(request, 'quiz.html', {
-            'question': question['English'],  # Display the English word
-            'options_with_audio': options_with_audio,  # Options paired with their audio files
-            'level': level,  # The quiz level
-            'language': language,  # The chosen language (Twi or Yoruba)
-            'current_question': current_question + 1,  # Current question number
-            'total_questions': 8,  # Total questions
+            'question': question['English'],  # Question in English
+            'options_with_audio': zip(options, options_audio_files),
+            'level': level,
+            'language': language,
+            'current_question': current_question + 1,
+            'total_questions': 8,
+            'correct_answers': correct_answers,  # For progress bar
+            'audio_file': question_audio_file
         })
+
+def welcome_view(request):
+    return render(request, 'home.html')
+
+def home_view(request):
+    return render(request, 'landing.html')
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # Log the user in after signup
+            return redirect('welcome')  # Redirect to welcome page
+    else:
+        form = UserCreationForm()
+    return render(request, 'signup.html', {'form': form})
+
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)  # Log the user in
+            return redirect('welcome')  # Redirect to welcome page
+    else:
+        form = AuthenticationForm()
+    return render(request, 'login.html', {'form': form})
+
+def logout_view(request):
+    if request.method == 'POST':
+        logout(request)
+        return redirect('home')

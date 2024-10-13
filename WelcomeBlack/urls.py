@@ -18,10 +18,16 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
+from quiz import views as quiz_views
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include('quiz.urls')),
+    path('', quiz_views.home_view, name='home'),  # Home page
+    path('login/', quiz_views.login_view, name='login'),  # Login page
+    path('signup/', quiz_views.signup_view, name='signup'),  # Signup page
+    path('welcome/', quiz_views.welcome_view, name='welcome'),  # Welcome page
 ]
 
 if settings.DEBUG:
