@@ -8,7 +8,7 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
+    background-color: white;
     color: #333;
     line-height: 1.6;
     margin: 0;
@@ -44,7 +44,7 @@ body {
 .app-title {
     font-size: 1.8em;
     font-weight: bold;
-    color: #00796b;
+    color: #cb9f0e;
 }
 
 /* Landing Page Layout */
@@ -135,6 +135,9 @@ a.forgot-password:hover {
     margin-top: 20px;
     color: #007bff;
     font-size: 1em;
+    display: flex;
+    justify-content: space-between; /* This adds space between the links */
+    width: 50%; /* You can adjust the width to control spacing */
 }
 
 .signup-link a {

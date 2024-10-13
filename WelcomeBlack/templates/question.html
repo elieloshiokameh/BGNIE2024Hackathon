@@ -1,0 +1,26 @@
+<!-- templates/question.html -->
+{% extends 'base.html' %}
+{% load static %}  <!-- Load static files (CSS, images) -->
+
+{% block content %}
+<div class="quiz-container">
+    <!-- Question Section -->
+    <h2 class="question-text">How do you say "word/phrase" in "lang"?</h2>
+
+    <!-- Multiple Choice Options -->
+    <div class="options">
+        <button class="option-btn">Pomme</button>
+        <button class="option-btn">Apfel</button>
+        <button class="option-btn">Manzana</button>
+        <button class="option-btn">Mela</button>
+    </div>
+
+    <!-- Check Button -->
+    <button class="check-btn">Check</button>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+        <div class="progress" style="width: 50%;"></div>
+    </div>
+</div>
+{% endblock %}

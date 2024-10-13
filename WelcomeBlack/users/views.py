@@ -4,6 +4,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 
+def question_view(request):
+    return render(request, 'question.html')
+
 def welcome_view(request):
     return render(request, 'home.html')
 
