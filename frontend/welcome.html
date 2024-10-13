@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duolingo for Africa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #f4f4f4;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Title and Logo at the top left */
+        .app-title-container {
+            position: absolute;
+            top: 10px;
+            left: 30px;
+            display: flex;
+            align-items: center;
+        }
+
+        .app-logo {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            fill: #00796b; /* Bolder color for the logo */
+        }
+
+        .app-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #00796b;
+        }
+
+        /* Background African maps animation */
+        .map-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .map {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: url('https://simplemaps.com/static/demos/resources//svg-library/svgs/africa.svg') no-repeat center center;
+            background-size: contain;
+            opacity: 0.2;
+            animation: move 8s linear infinite;
+        }
+
+        @keyframes move {
+            0% {
+                transform: translate(var(--startX), var(--startY)) rotate(0deg);
+            }
+            100% {
+                transform: translate(var(--endX), var(--endY)) rotate(360deg);
+            }
+        }
+
+        /* Mosaic Text for Igbo and Twi */
+        .mosaic-igbo {
+            position: absolute;
+            font-size: 5em;
+            color: rgba(0, 0, 0, 0.1);
+            top: 10%;
+            left: 5%;
+            z-index: 1;
+            animation: mosaicMove 3s infinite alternate ease-in-out;
+        }
+
+        .mosaic-twi {
+            position: absolute;
+            font-size: 5em;
+            color: rgba(0, 0, 0, 0.1);
+            bottom: 10%;
+            right: 5%;
+            z-index: 1;
+            animation: mosaicMove 3s infinite alternate ease-in-out;
+        }
+
+        @keyframes mosaicMove {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.2);
+            }
+        }
+
+        /* Login Container */
+        .login-container {
+            position: relative;
+            z-index: 2;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            width: 350px;
+            text-align: center;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #00796b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .login-btn:hover {
+            background-color: #004d40;
+        }
+
+        .social-login {
+            margin: 20px 0;
+        }
+
+        .social-btn {
+            display: inline-block;
+            width: 45%;
+            padding: 10px;
+            margin: 5px;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .google-btn {
+            background-color: #dd4b39;
+        }
+
+        .google-btn:hover {
+            background-color: #c23321;
+        }
+
+        .facebook-btn {
+            background-color: #3b5998;
+        }
+
+        .facebook-btn:hover {
+            background-color: #2d4373;
+        }
+
+        .support-link {
+            display: block;
+            margin-top: 10px;
+            color: #00796b;
+            text-decoration: none;
+        }
+
+        .support-link:hover {
+            text-decoration: underline;
+        }
+
+        .register-link {
+            color: #00796b;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-top: 10px;
+            display: block;
+        }
+
+        /* Footer */
+        .footer {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            color: #00796b;
+            font-size: 0.9em;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- App Title and Logo -->
+<div class="app-title-container">
+    <img src="https://simplemaps.com/static/demos/resources//svg-library/svgs/africa.svg" class="app-logo" alt="Africa Map Logo" style="width: 40px; height: 40px; margin-left: 10px; fill: #00796b;"/>
+    <div class="app-title">Duolingo for Africa</div>
+</div>
+
+<!-- Moving African maps -->
+<div class="map-container" id="mapContainer"></div>
+
+<!-- Mosaic Text (Igbo at top-left and Twi at bottom-right) -->
+<div class="mosaic-igbo">Igbo</div>
+<div class="mosaic-twi">Twi</div>
+
+<!-- Login Form -->
+<div class="login-container">
+    <h2>Login</h2>
+    <input type="text" class="input-field" id="username" placeholder="Username" />
+    <input type="password" class="input-field" id="password" placeholder="Password" />
+    <button class="login-btn" id="loginBtn">Login</button>
+
+    <div class="social-login">
+        <span>Or login with:</span>
+        <div>
+            <span class="social-btn google-btn" id="googleLogin">Google</span>
+            <span class="social-btn facebook-btn" id="facebookLogin">Facebook</span>
+        </div>
+    </div>
+
+    <a href="#" class="support-link">Contact Support</a>
+    <span class="register-link" id="registerLink">Register here</span>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    &copy; 2024 HireTeam3
+</div>
+
+<script>
+    // Generate random moving maps
+    function createMovingMaps() {
+        const mapContainer = document.getElementById('mapContainer');
+        const colors = ['green', 'black', 'red', 'blue', 'orange', 'purple'];
+
+        for (let i = 0; i < 10; i++) {
+            const map = document.createElement('div');
+            map.classList.add('map');
+
+            // Set random start and end positions
+            map.style.setProperty('--startX', `${Math.random() * 100}vw`);
+            map.style.setProperty('--startY', `${Math.random() * 100}vh`);
+            map.style.setProperty('--endX', `${Math.random() * 100}vw`);
+            map.style.setProperty('--endY', `${Math.random() * 100}vh`);
+
+            // Set random color for the map
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            map.style.opacity = '0.5'; // Adjust opacity for visibility
+            map.style.backgroundColor = randomColor;
+
+            mapContainer.appendChild(map);
+        }
+    }
+
+    createMovingMaps();
+
+    // Login logic placeholder
+    document.getElementById('loginBtn').addEventListener('click', () => {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        if (username && password) {
+            alert('Logging in...');
+        } else {
+            alert('Please fill in both fields.');
+        }
+    });
+
+    // Social login placeholders
+    document.getElementById('googleLogin').addEventListener('click', () => {
+        alert('Redirecting to Google login...');
+    });
+
+    document.getElementById('facebookLogin').addEventListener('click', () => {
+        alert('Redirecting to Facebook login...');
+    });
+
+    // Redirect to registration
+    document.getElementById('registerLink').addEventListener('click', () => {
+        alert('Redirecting to registration page...');
+    });
+</script>
+
+</body>
+</html>
