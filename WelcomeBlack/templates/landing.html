@@ -1,0 +1,24 @@
+<!-- templates/landing.html -->
+{% extends 'base.html' %}
+{% load static %}  <!-- Add this to load the static tag -->
+
+{% block content %}
+<div class="landing-page">
+    <!-- Left Section: Login/Signup -->
+    <div class="form-section">
+        <h1>Welcome to WelcomeBlack</h1>
+        <p>Connect with your roots and learn African languages!</p>
+
+        <div class="signup-link">
+            <a href="{% url 'login' %}">Log in</a>
+            <a href="{% url 'signup' %}">Sign Up</a>
+        </div>
+    </div>
+
+    <!-- Right Section: Plant Image -->
+    <div class="visual-section">
+        <img src="{% static 'images/plant.jpg' %}" alt="Decorative Plant">
+    </div>
+</div>
+
+{% endblock %}
