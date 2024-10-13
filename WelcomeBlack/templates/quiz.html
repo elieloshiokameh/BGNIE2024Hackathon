@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f5f5f5;
+        }
+        .quiz-container {
+            margin: 50px auto;
+            max-width: 600px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .question {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+        .options-grid {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+        }
+        .option {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 120px;
+            height: 150px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+        .option:hover {
+            transform: scale(1.05);
+        }
+        .option input {
+            display: none;
+        }
+        .option.selected {
+            border: 3px solid #1dd1a1;
+        }
+        .option p {
+            margin: 0;
+            padding: 10px 0;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .submit-btn {
+            background-color: #10ac84;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .submit-btn:hover {
+            background-color: #1dd1a1;
+        }
+        .play-audio-btn {
+            background: none;
+            border: none;
+            color: #1dd1a1;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .play-audio-btn:hover {
+            color: #10ac84;
+        }
+    </style>
+    <script>
+        // Function to play the corresponding audio
+        function playAudio(audioId) {
+            const audioElement = document.getElementById(audioId);
+            audioElement.play();
+        }
+
+        // Function to select the option when clicked
+        function selectOption(optionElement) {
+            // Deselect all options
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => option.classList.remove('selected'));
+            
+            // Select the clicked option
+            optionElement.classList.add('selected');
+            
+            // Check the radio input inside the selected option
+            optionElement.querySelector('input').checked = true;
+        }
+    </script>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h1>Quiz - Level: {{ level }}</h1>
+
+    <!-- Question (display only English) -->
+    <div class="question">
+        How do you say "{{ question }}" in {{ language }}?
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="options-grid">
+            {% for option, audio_file in options_with_audio %}
+                <div class="option" onclick="selectOption(this)">
+                    <!-- Radio input to hold the selected answer -->
+                    <input type="radio" name="answer" value="{{ option }}" required>
+                    <p>{{ option }}</p>
+
+                    <!-- Play audio button for each option -->
+                    <button type="button" class="play-audio-btn" onclick="playAudio('audio_{{ forloop.counter }}')">🔊</button>
+                    <audio id="audio_{{ forloop.counter }}" src="{{ audio_file }}" preload="auto"></audio>
+                </div>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="submit-btn">Check</button>
+    </form>
+</div>
+
+</body>
+</html>
