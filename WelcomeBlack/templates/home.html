@@ -8,11 +8,10 @@
     <!-- Language Selection -->
     <p>Select the language you want to learn:</p>
 
-    <div class="language-selection">
+    <div class="language-selection" style="gap: 140px">
         <form method="GET" action="{% url 'questions' %}">
             <button type="submit" name="language" value="yoruba" class="btn">Learn Yoruba</button>
         </form>
-
         <form method="GET" action="{% url 'questions' %}">
             <button type="submit" name="language" value="twi" class="btn">Learn Twi</button>
         </form>

@@ -203,6 +203,23 @@ a.forgot-password:hover {
 .welcome-section a:hover {
     background-color: #004d40;
 }
+
+.language-selection{
+    display: flex;
+    justify-content: space-around;
+
+    .lol{
+        background-color: white;
+        text-color: white;
+
+        &hover{
+            background: white;
+            text-color: white;
+            background-color: #ffffff;
+        }
+    }
+}
+
 .quiz-container{
     align-items: center;
     display: -ms-flexbox;
@@ -217,6 +234,14 @@ a.forgot-password:hover {
         .option-btn {
             height: 70px;
             width: 90px;
+            background-color: white;
+            border-width: thin;
+            font-weight: bold;
+
+            &:hover{
+                background-color: gold;
+                opacity: 0.8;
+            }
         }
     }
 }
