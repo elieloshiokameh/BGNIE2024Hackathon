@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <script>
+        function playAudio(audioId) {
+            const audioElement = document.getElementById(audioId);
+            audioElement.play();
+        }
+
+        function selectOption(optionElement) {
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => option.classList.remove('selected'));
+            optionElement.classList.add('selected');
+            optionElement.querySelector('input').checked = true;
+        }
+
+        function updateProgressBar(correctCount, totalQuestions) {
+            const progressBar = document.querySelector('.progress-bar');
+            const percentage = (correctCount / totalQuestions) * 100;
+            progressBar.style.height = percentage + "%";
+        }
+
+        window.onload = function() {
+            const correctCount = {{ correct_answers }};
+            const totalQuestions = {{ total_questions }};
+            updateProgressBar(correctCount, totalQuestions);
+        }
+    </script>
+
+    <div class="quiz-page-container">
+        <!-- Quiz Content -->
+        <div class="quiz-container">
+            <h1>Quiz - Level: {{ level }}</h1>
+
+            <div class="question">
+                How do you say "{{ question }}" in {{ language }}?
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="options-grid">
+                    {% for option, audio_file in options_with_audio %}
+                        <div class="option" onclick="selectOption(this)">
+                            <input type="radio" name="answer" value="{{ option }}" required>
+                            <p>{{ option }}</p>
+
+                            <button type="button" class="play-audio-btn" onclick="playAudio('audio_{{ forloop.counter }}')">🔊</button>
+                            <audio id="audio_{{ forloop.counter }}" src="{{ audio_file }}" preload="auto"></audio>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <button type="submit" class="submit-btn">Check</button>
+            </form>
+        </div>
+
+        <!-- Progress Bar Container -->
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+            <div class="progress-label">{{ correct_answers }}/{{ total_questions }}</div>
+        </div>
+    </div>
+{% endblock %}

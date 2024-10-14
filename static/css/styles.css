@@ -1,0 +1,457 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    justify-content: center;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* Global Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* App Title and Logo Styling */
+.app-title-container {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.app-title-container img {
+    width: 50px;
+    margin-right: 15px;
+}
+
+.app-title {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #00796b;
+}
+
+/* Landing Page Layout */
+.landing-page {
+    display: flex;
+    width: 90%;
+    max-width: 1200px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Left side: Login and Signup Form */
+.form-section {
+    width: 50vw;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px 0 0 10px; /* Rounded corners on the left side */
+    box-shadow: none;
+}
+
+.form-section h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+.form-section p {
+    font-size: 1.1em;
+    color: #777;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+input.input-field {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    font-size: 1em;
+    color: #333;
+}
+
+input.input-field:focus {
+    outline: none;
+    border: 1px solid #007bff;
+}
+
+button.btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #00796b;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.btn:hover {
+    background-color: #004d40;
+}
+
+/* Forgot Password Link */
+.form-section a.forgot-password {
+    color: #ff8c00;
+    text-align: right;
+    margin-bottom: 20px;
+    text-decoration: none;
+    display: block;
+}
+
+a.forgot-password:hover {
+    text-decoration: underline;
+}
+
+/* Signup Link Below Forms */
+.signup-link {
+    margin-top: 20px;
+    color: #007bff;
+    font-size: 1em;
+    display: flex;
+    justify-content: space-between; /* This adds space between the links */
+    width: 50%; /* You can adjust the width to control spacing */
+}
+
+.signup-link a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
+}
+
+/* Right side: Visual Section with Plant Image */
+.visual-section {
+    width: 50%;
+    background-color: #f8f8f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 40px;
+    border-radius: 0 10px 10px 0; /* Rounded corners on the right side */
+}
+
+.visual-section img {
+    max-width: 80%;
+    border-radius: 15px;
+}
+
+/* Welcome Page Styling */
+.welcome-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 60px;
+    border-radius: 10px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.welcome-section h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #00796b;
+}
+
+.welcome-section p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    color: #777;
+}
+
+.welcome-section a {
+    text-decoration: none;
+    font-size: 1.1em;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: #00796b;
+    color: white;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.welcome-section a:hover {
+    background-color: #004d40;
+}
+
+.language-selection{
+    display: flex;
+    justify-content: space-around;
+
+    .lol{
+        background-color: white;
+        text-color: white;
+
+        &hover{
+            background: white;
+            text-color: white;
+            background-color: #ffffff;
+        }
+    }
+}
+
+.quiz-container{
+    align-items: center;
+    display: -ms-flexbox;
+    justify-content: center;
+    text-align: center;
+    .options{
+        margin-top: 30px;
+        margin-bottom: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        .option-btn {
+            height: 70px;
+            width: 90px;
+            background-color: white;
+            border-width: thin;
+            font-weight: bold;
+
+            &:hover{
+                background-color: gold;
+                opacity: 0.8;
+            }
+        }
+    }
+}
+
+
+/* Footer Section */
+.footer {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    font-size: 0.9em;
+    color: #777;
+    background-color: #fff;
+    padding: 10px;
+}
+
+.footer a {
+    color: #00796b;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Pagination Indicators (For Image Slides) */
+.pagination {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.pagination .page-number {
+    width: 40px;
+    height: 2px;
+    background-color: #333;
+    margin: 0 5px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.pagination .page-number.active {
+    background-color: #ff8c00;
+}
+
+.map-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.map {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: url('https://simplemaps.com/static/demos/resources//svg-library/svgs/africa.svg') no-repeat center center;
+    background-size: contain;
+    opacity: 0.2;
+    animation: move 8s linear infinite;
+}
+
+@keyframes move {
+    0% {
+        transform: translate(var(--startX), var(--startY)) rotate(0deg);
+    }
+    100% {
+        transform: translate(var(--endX), var(--endY)) rotate(360deg);
+    }
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    .landing-page {
+        flex-direction: column;
+    }
+
+    .form-section, .visual-section {
+        width: 100%;
+    }
+
+    .visual-section img {
+        max-width: 100%;
+    }
+}
+/* Quiz Page Styles */
+.quiz-page-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px;
+}
+
+.quiz-container {
+    margin: 0 auto;
+    max-width: 600px;
+    flex-grow: 1;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.question {
+    font-size: 20px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.options-grid {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+}
+
+.option {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 120px;
+    height: 150px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    cursor: pointer;
+    text-align: center;
+}
+
+.option:hover {
+    transform: scale(1.05);
+}
+
+.option input {
+    display: none;
+}
+
+.option.selected {
+    border: 3px solid #1dd1a1;
+}
+
+.option p {
+    margin: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.submit-btn {
+    background-color: #10ac84;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: block;
+    margin: 0 auto;
+}
+
+.submit-btn:hover {
+    background-color: #1dd1a1;
+}
+
+.play-audio-btn {
+    background: none;
+    border: none;
+    color: #1dd1a1;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.play-audio-btn:hover {
+    color: #10ac84;
+}
+
+/* Progress Bar Styling */
+.progress-container {
+    width: 50px;
+    height: 300px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    margin-left: 30px;
+    position: relative;
+}
+
+.progress-bar {
+    width: 100%;
+    background-color: #1dd1a1;
+    border-radius: 10px 10px 0 0;
+    position: absolute;
+    bottom: 0;
+    height: 0;
+}
+
+.progress-label {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: bold;
+    color: #333;
+}
